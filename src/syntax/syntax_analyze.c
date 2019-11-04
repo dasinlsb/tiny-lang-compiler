@@ -39,9 +39,9 @@ void make_parsers () {
       MK_GRAMMAR(type),
       MK_MAYBE(MK_TOKEN(TMain)),
       MK_TOKEN(TIdentifier),
-      MK_TOKEN(TLParen),
+      MK_TOKEN_I(TLParen),
       MK_GRAMMAR(formal_params),
-      MK_TOKEN(TRParen),
+      MK_TOKEN_I(TRParen),
       MK_GRAMMAR(block)
   ))
   // FormalParams -> [FormalParam (',' FormalParam)*]
@@ -50,7 +50,7 @@ void make_parsers () {
       MK_MAYBE(MK_AND(
           MK_GRAMMAR(formal_param),
           MK_MANY(MK_AND(
-              MK_IGNORE(MK_TOKEN(TComma)),
+              MK_TOKEN_I(TComma),
               MK_GRAMMAR(formal_param)
               ))
       )))
@@ -76,9 +76,9 @@ void make_parsers () {
    MK_DEFN(block,
        AST_NODE_BLOCK,
        MK_AND(
-           MK_TOKEN(TBegin),
+           MK_TOKEN_I(TBegin),
            MK_MANY(MK_GRAMMAR(stmt)),
-           MK_TOKEN(TEnd)
+           MK_TOKEN_I(TEnd)
        ))
   // Statement -> ...
   MK_DEFN(stmt,
@@ -99,12 +99,12 @@ void make_parsers () {
           MK_AND(
               MK_TOKEN(TInt),
               MK_TOKEN(TIdentifier),
-              MK_TOKEN(TSemi)
+              MK_TOKEN_I(TSemi)
               ),
           MK_AND(
               MK_TOKEN(TReal),
               MK_TOKEN(TIdentifier),
-              MK_TOKEN(TSemi)
+              MK_TOKEN_I(TSemi)
               )
       ))
   // AssignStmt -> Id := Expr ';'
@@ -112,9 +112,9 @@ void make_parsers () {
       AST_NODE_ASSIGN_STMT,
       MK_AND(
           MK_TOKEN(TIdentifier),
-          MK_TOKEN(TAssign),
+          MK_TOKEN_I(TAssign),
           MK_GRAMMAR(expr),
-          MK_TOKEN(TSemi)
+          MK_TOKEN_I(TSemi)
       ))
   // ReturnStmt -> RETURN Expr ';'
   MK_DEFN(return_stmt,
@@ -122,7 +122,7 @@ void make_parsers () {
       MK_AND(
           MK_TOKEN(TReturn),
           MK_GRAMMAR(expr),
-          MK_TOKEN(TSemi)
+          MK_TOKEN_I(TSemi)
       ))
   // IfStmt -> IF '(' BoolExpr ')' Stmt
   //         | IF '(' BoolExpr ')' Stmt ELSE Stmt
@@ -131,18 +131,18 @@ void make_parsers () {
   MK_OR(
       MK_AND(
           MK_TOKEN(TIf),
-          MK_TOKEN(TLParen),
+          MK_TOKEN_I(TLParen),
           MK_GRAMMAR(bool_expr),
-          MK_TOKEN(TRParen),
+          MK_TOKEN_I(TRParen),
           MK_GRAMMAR(stmt),
           MK_TOKEN(TElse),
           MK_GRAMMAR(stmt)
           ),
       MK_AND(
           MK_TOKEN(TIf),
-          MK_TOKEN(TLParen),
+          MK_TOKEN_I(TLParen),
           MK_GRAMMAR(bool_expr),
-          MK_TOKEN(TRParen),
+          MK_TOKEN_I(TRParen),
           MK_GRAMMAR(stmt)
           )
   ))
@@ -151,24 +151,24 @@ void make_parsers () {
       AST_NODE_WRITE_STMT,
       MK_AND(
           MK_TOKEN(TWrite),
-          MK_TOKEN(TLParen),
+          MK_TOKEN_I(TLParen),
           MK_GRAMMAR(expr),
-          MK_TOKEN(TComma),
+          MK_TOKEN_I(TComma),
           MK_TOKEN(TConstString),
-          MK_TOKEN(TRParen),
-          MK_TOKEN(TSemi)
+          MK_TOKEN_I(TRParen),
+          MK_TOKEN_I(TSemi)
       ))
   // ReadStmt -> READ '(' Id ',' QString ')' ';'
   MK_DEFN(read_stmt,
       AST_NODE_READ_STMT,
       MK_AND(
           MK_TOKEN(TRead),
-          MK_TOKEN(TLParen),
+          MK_TOKEN_I(TLParen),
           MK_TOKEN(TIdentifier),
-          MK_TOKEN(TComma),
+          MK_TOKEN_I(TComma),
           MK_TOKEN(TConstString),
-          MK_TOKEN(TRParen),
-          MK_TOKEN(TSemi)
+          MK_TOKEN_I(TRParen),
+          MK_TOKEN_I(TSemi)
       ))
   /**
    * Expressions
@@ -209,15 +209,15 @@ void make_parsers () {
           MK_OR(
               MK_TOKEN(TConstNumber),
               MK_AND(
-                  MK_TOKEN(TLParen),
+                  MK_TOKEN_I(TLParen),
                   MK_GRAMMAR(expr),
-                  MK_TOKEN(TRParen)
+                  MK_TOKEN_I(TRParen)
                   ),
               MK_AND(
                   MK_TOKEN(TIdentifier),
-                  MK_TOKEN(TLParen),
+                  MK_TOKEN_I(TLParen),
                   MK_GRAMMAR(actual_params),
-                  MK_TOKEN(TRParen)
+                  MK_TOKEN_I(TRParen)
                   ),
               MK_TOKEN(TIdentifier)
               )
@@ -245,7 +245,7 @@ void make_parsers () {
           MK_AND(
               MK_GRAMMAR(expr),
               MK_MANY(MK_AND(
-                  MK_TOKEN(TComma),
+                  MK_TOKEN_I(TComma),
                   MK_GRAMMAR(expr)
                   )))
       ))

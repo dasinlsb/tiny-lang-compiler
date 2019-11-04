@@ -86,6 +86,6 @@ sa_parser_t* sa_make_token (token_t t);
 #define MK_TOKEN(t) sa_make_token(t)
 #define MK_GRAMMAR(s) sa_make_grammar(#s)
 #define MK_IGNORE(p) sa_make_ignore(p)
-
+#define MK_TOKEN_I(p) MK_IGNORE(MK_TOKEN(p))
 
 #endif //PARSER_SRC_SYNTAX_PARSER_COMBINATOR_H_
