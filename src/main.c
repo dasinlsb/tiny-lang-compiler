@@ -26,20 +26,23 @@ void my_test(const char *parser_name, const char *spec) {
   fprintf(out,"scanned program:\n");
   fprintf(out, "%s\n", buffer);
   fprintf(out, "---------------\n");
+  fflush(out);
   token_data **tokens = lexer(buffer);
   fprintf(out, "tokens:\n");
-  fprintf(out, "%s\n", format_tokens((const token_data**)tokens));
+  fprintf(out, "%s", format_tokens((const token_data**)tokens));
   fprintf(out, "---------------\n");
+  fflush(out);
   AST *ast = syntax_analyze(parser_name, tokens);
   fprint_ast(ast, out, 0);
   fprintf(out, "------FINISHED-----");
+  fflush(out);
   fclose(out);
 }
 
 int main(int argc, char *argv[]) {
-  my_test("block", "block");
-  my_test("expr", "expr");
-  //my_test("prog", 1);
-  //my_test("read_stmt", 2);
+  //my_test("block", "block");
+  //my_test("expr", "expr");
+  //my_test("method_decl", "fun");
+  my_test("prog", "sample");
   return 0;
 }

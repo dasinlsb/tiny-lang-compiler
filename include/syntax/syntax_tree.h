@@ -31,7 +31,7 @@ enum {
   AST_NODE_MULTI_EXPR = 16,
   AST_NODE_PRIMARY_EXPR = 17,
   AST_NODE_BOOL_EXPR = 18,
-  AST_NODE_ACTUAL_EXPR = 19,
+  AST_NODE_ACTUAL_PARAMS = 19,
 
   AST_NODE_IGNORE = 100,
   AST_NODE_VIRT = 101
@@ -55,5 +55,7 @@ void append_ast_child (AST *ast, AST *child);
 void append_ast_token (AST *ast, token_data *token);
 
 void fprint_ast (AST *ast, FILE *out, int indent);
+
+void ast_move_child_up (AST **ast);
 
 #endif //PARSER_SRC_SYNTAX_SYNTAX_TREE_H_

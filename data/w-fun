@@ -1,0 +1,31 @@
+scanned program:
+INT MAIN f1(INT x, INT y)
+BEGIN
+INT z;
+END
+---------------
+tokens:
+data:[INT], [MAIN], [f1], [(], [INT], [x], [,], [INT], [y], [)], [BEGIN], [INT], [z], [;], [END], 
+---------------
+->[method]
+->[_]: INT 
+->[_]: MAIN 
+->[_]: f1 
+->[_]: ( 
+->[params]
+  ->[_]
+    ->[param]
+      ->[_]: INT 
+      ->[_]: x 
+    ->[param]
+      ->[_]: INT 
+      ->[_]: y 
+->[_]: ) 
+->[block]
+  ->[_]: BEGIN 
+  ->[_]
+    ->[_]: INT 
+    ->[_]: z 
+    ->[_]: ; 
+  ->[_]: END 
+------FINISHED-----

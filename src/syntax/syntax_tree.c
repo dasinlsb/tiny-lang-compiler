@@ -18,11 +18,13 @@ AST* empty_syntax_tree () {
 
 void append_ast_child (AST *ast, AST *child) {
   assert(ast != NULL);
-  assert(child != NULL);
-  vector_push_back(ast->children, child);
+  if (child != NULL) {
+    vector_push_back(ast->children, child);
+  }
 }
 
 void append_ast_token (AST *ast, token_data *token) {
+  assert(token != NULL);
   vector_push_back(ast->tokens, token);
 }
 
@@ -30,9 +32,10 @@ void fprint_ast (AST *ast, FILE *out, int indent) {
   if (ast == NULL) return;
   int i;
   for (i = 0; i < indent; i++) {
-    if (i < indent - 1)fputc(' ', out);
-    if (i == indent-1) fputc('-', out);
+    if (i < indent - 2)fputc(' ', out);
+    if (i == indent - 2) fprintf(out, "->");
   }
+  fprintf(out, "[");
   switch (ast->type) {
     case AST_NODE_PROG: {
       fprintf(out, "prog");
@@ -95,7 +98,7 @@ void fprint_ast (AST *ast, FILE *out, int indent) {
       break;
     }
     case AST_NODE_MULTI_EXPR : {
-     fprintf(out, "multi expt");
+     fprintf(out, "multi expr");
       break;
     }
     case AST_NODE_PRIMARY_EXPR : {
@@ -106,17 +109,21 @@ void fprint_ast (AST *ast, FILE *out, int indent) {
      fprintf(out, "bool expr");
       break;
     }
-    case AST_NODE_ACTUAL_EXPR : {
-     fprintf(out, "actual expr");
+    case AST_NODE_ACTUAL_PARAMS : {
+     fprintf(out, "actual params");
       break;
     }
    case AST_NODE_IGNORE : {
      fprintf(out, "IGNORE");
      break;
    }
+    default: {
+      fprintf(out, "_");
+    }
   }
-  fprintf(out, " : ");
+  fprintf(out, "]");
   for (i = 0; i < (int)vector_size(ast->tokens); i++) {
+    if (i == 0) fprintf(out, ": ");
     fprint_token(out, ast->tokens[i]);
     fprintf(out, " ");
   }
@@ -126,3 +133,13 @@ void fprint_ast (AST *ast, FILE *out, int indent) {
   }
 }
 
+void ast_move_child_up (AST **ast) {
+  int n;
+  if ((*ast)->type != 0) return;
+  n = (int)vector_size((*ast)->children);
+  if (n == 0) {
+    *ast = NULL;
+  } else if (n == 1) {
+    *ast = (*ast)->children[0];
+  }
+}

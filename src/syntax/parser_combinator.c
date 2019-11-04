@@ -53,6 +53,7 @@ int sa_run_parser (sa_input_t *in, sa_env_t *env, sa_parser_t *p, sa_result_t **
           return 0;
         }
       }
+      ast_move_child_up(&(*r)->ast);
       return 1;
     }
     case SA_TYPE_GRAMMAR: {
@@ -84,6 +85,7 @@ int sa_run_parser (sa_input_t *in, sa_env_t *env, sa_parser_t *p, sa_result_t **
           break;
         }
       }
+      ast_move_child_up(&(*r)->ast);
       return 1;
     }
     case SA_TYPE_MAYBE: {
@@ -92,6 +94,7 @@ int sa_run_parser (sa_input_t *in, sa_env_t *env, sa_parser_t *p, sa_result_t **
       } else {
 
       }
+      ast_move_child_up(&(*r)->ast);
       return 1;
     }
     // 1 or more times
@@ -105,6 +108,7 @@ int sa_run_parser (sa_input_t *in, sa_env_t *env, sa_parser_t *p, sa_result_t **
           break;
         }
       }
+      ast_move_child_up(&(*r)->ast);
       return j > 0;
     }
     case SA_TYPE_OR: {

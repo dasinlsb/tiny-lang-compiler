@@ -11,10 +11,10 @@ static char* toplevel_parse_error = NULL;
 
 #define MK_DEFN(n,t,p) do {\
 sa_parser_t *parser = p; \
-p->name = #n; \
-p->info = t; \
+parser->name = #n; \
+parser->info = t; \
 DebugLog(3,"made defination name[%s] info[%d]\n", #n, t); \
-insert_parser(sa_global_env, #n, p); \
+insert_parser(sa_global_env, #n, parser); \
 } while(0);
 
 
@@ -77,7 +77,7 @@ void make_parsers () {
        AST_NODE_BLOCK,
        MK_AND(
            MK_TOKEN(TBegin),
-           MK_GRAMMAR(stmt),
+           MK_MANY(MK_GRAMMAR(stmt)),
            MK_TOKEN(TEnd)
        ))
   // Statement -> ...
@@ -208,7 +208,6 @@ void make_parsers () {
       AST_NODE_PRIMARY_EXPR,
           MK_OR(
               MK_TOKEN(TConstNumber),
-              MK_TOKEN(TIdentifier),
               MK_AND(
                   MK_TOKEN(TLParen),
                   MK_GRAMMAR(expr),
@@ -219,12 +218,13 @@ void make_parsers () {
                   MK_TOKEN(TLParen),
                   MK_GRAMMAR(actual_params),
                   MK_TOKEN(TRParen)
-                  )
+                  ),
+              MK_TOKEN(TIdentifier)
               )
       )
   // BoolExpr -> Expr '==' Expr | Expr '!=' Expr
   MK_DEFN(bool_expr,
-      AST_NODE_ACTUAL_EXPR,
+      AST_NODE_ACTUAL_PARAMS,
       MK_OR(
           MK_AND(
               MK_GRAMMAR(expr),
@@ -239,10 +239,11 @@ void make_parsers () {
       )
   )
   // ActualParams -> [Expr (',' Expr)*]
-  MK_DEFN(actual_expr,
-      AST_NODE_ACTUAL_EXPR,
+  MK_DEFN(actual_params,
+      AST_NODE_ACTUAL_PARAMS,
       MK_MAYBE(
-          MK_AND(MK_GRAMMAR(expr),
+          MK_AND(
+              MK_GRAMMAR(expr),
               MK_MANY(MK_AND(
                   MK_TOKEN(TComma),
                   MK_GRAMMAR(expr)

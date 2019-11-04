@@ -1,0 +1,154 @@
+scanned program:
+/** this is a comment line in the sample program **/
+ INT f2(INT x, INT y )
+ BEGIN
+    INT z;
+    z := x*x - y*y;
+    RETURN z;
+ END
+ INT MAIN f1()
+ BEGIN
+    INT x;
+    READ(x, "A41.input");
+    INT y;
+    READ(y, "A42.input");
+    INT z;
+    z := f2(x,y) + f2(y,x);
+    WRITE (z, "A4.output");
+ END
+---------------
+tokens:
+data:[INT], [f2], [(], [INT], [x], [,], [INT], [y], [)], [BEGIN], [INT], [z], [;], [z], [:=], [x], [*], [x], [-], [y], [*], [y], [;], [RETURN], [z], [;], [END], [INT], [MAIN], [f1], [(], [)], [BEGIN], [INT], [x], [;], [READ], [(], [x], [,], ["A41.input"], [)], [;], [INT], [y], [;], [READ], [(], [y], [,], ["A42.input"], [)], [;], [INT], [z], [;], [z], [:=], [f2], [(], [x], [,], [y], [)], [+], [f2], [(], [y], [,], [x], [)], [;], [WRITE], [(], [z], [,], ["A4.output"], [)], [;], [END], 
+---------------
+[prog]
+->[method]
+  ->[_]: INT 
+  ->[_]: f2 
+  ->[_]: ( 
+  ->[params]
+    ->[_]
+      ->[param]
+        ->[_]: INT 
+        ->[_]: x 
+      ->[param]
+        ->[_]: INT 
+        ->[_]: y 
+  ->[_]: ) 
+  ->[block]
+    ->[_]: BEGIN 
+    ->[_]
+      ->[_]
+        ->[_]: INT 
+        ->[_]: z 
+        ->[_]: ; 
+      ->[assign]
+        ->[_]: z 
+        ->[_]: := 
+        ->[expr]
+          ->[multi expr]
+            ->[_]: x 
+            ->[_]
+              ->[_]: * 
+              ->[_]: x 
+          ->[_]
+            ->[_]: - 
+            ->[multi expr]
+              ->[_]: y 
+              ->[_]
+                ->[_]: * 
+                ->[_]: y 
+        ->[_]: ; 
+      ->[return ]
+        ->[_]: RETURN 
+        ->[expr]
+          ->[multi expr]
+            ->[_]: z 
+        ->[_]: ; 
+    ->[_]: END 
+->[method]
+  ->[_]: INT 
+  ->[_]: MAIN 
+  ->[_]: f1 
+  ->[_]: ( 
+  ->[params]
+  ->[_]: ) 
+  ->[block]
+    ->[_]: BEGIN 
+    ->[_]
+      ->[_]
+        ->[_]: INT 
+        ->[_]: x 
+        ->[_]: ; 
+      ->[read]
+        ->[_]: READ 
+        ->[_]: ( 
+        ->[_]: x 
+        ->[_]: , 
+        ->[_]: "A41.input" 
+        ->[_]: ) 
+        ->[_]: ; 
+      ->[_]
+        ->[_]: INT 
+        ->[_]: y 
+        ->[_]: ; 
+      ->[read]
+        ->[_]: READ 
+        ->[_]: ( 
+        ->[_]: y 
+        ->[_]: , 
+        ->[_]: "A42.input" 
+        ->[_]: ) 
+        ->[_]: ; 
+      ->[_]
+        ->[_]: INT 
+        ->[_]: z 
+        ->[_]: ; 
+      ->[assign]
+        ->[_]: z 
+        ->[_]: := 
+        ->[expr]
+          ->[multi expr]
+            ->[_]
+              ->[_]: f2 
+              ->[_]: ( 
+              ->[actual params]
+                ->[_]
+                  ->[expr]
+                    ->[multi expr]
+                      ->[_]: x 
+                  ->[_]
+                    ->[_]: , 
+                    ->[expr]
+                      ->[multi expr]
+                        ->[_]: y 
+              ->[_]: ) 
+          ->[_]
+            ->[_]: + 
+            ->[multi expr]
+              ->[_]
+                ->[_]: f2 
+                ->[_]: ( 
+                ->[actual params]
+                  ->[_]
+                    ->[expr]
+                      ->[multi expr]
+                        ->[_]: y 
+                    ->[_]
+                      ->[_]: , 
+                      ->[expr]
+                        ->[multi expr]
+                          ->[_]: x 
+                ->[_]: ) 
+        ->[_]: ; 
+      ->[write]
+        ->[_]: WRITE 
+        ->[_]: ( 
+        ->[expr]
+          ->[multi expr]
+            ->[_]: z 
+        ->[_]: , 
+        ->[_]: "A4.output" 
+        ->[_]: ) 
+        ->[_]: ; 
+    ->[_]: END 
+------FINISHED-----
