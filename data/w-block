@@ -1,0 +1,17 @@
+scanned program:
+BEGIN
+INT x;
+END
+---------------
+tokens:
+data:[BEGIN], [INT], [x], [;], [END], 
+
+---------------
+ : 
+ - : BEGIN 
+ - : 
+   - : INT 
+   - : x 
+   - : ; 
+ - : END 
+------FINISHED-----

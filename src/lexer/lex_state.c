@@ -2,17 +2,8 @@
 // Created by dasin on 2019/11/1.
 //
 
-#ifndef PARSER_SRC_LEXER_LEX_STATE_H_
-#define PARSER_SRC_LEXER_LEX_STATE_H_
+#include "lexer/lex_state.h"
 
-#include "../util/file_position.h"
-#include <assert.h>
-
-typedef struct {
-  char *sp; // str position
-  const char *end;
-  filepos fp;
-} lex_state;
 
 char* peek_lex_state (lex_state *lex) {
   if (lex->sp == lex->end) return NULL;
@@ -38,4 +29,4 @@ char* lex_state_find_next_match (lex_state *lex, const char *word) {
   return find_next_match(lex->sp, lex->end, word);
 }
 
-#endif //PARSER_SRC_LEXER_LEX_STATE_H_
+

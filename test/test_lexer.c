@@ -4,8 +4,10 @@
 
 #include <criterion/criterion.h>
 #include <string.h>
-#include "../src/lexer/defs.h"
-#include "../src/lexer/lexer.h"
+#include "lexer/defs.h"
+#include "lexer/token.h"
+#include "lexer/lexer.h"
+#include "util/string.h"
 
 const char* format_token_datas (const char *data[], int n) {
   string *buf = empty_string();
@@ -25,7 +27,7 @@ const char* format_token_datas (const char *data[], int n) {
 if (ans == NULL && vector_size(tokens) == 0) break; \
 int n = sizeof(ans) / sizeof(char*); \
 if (n != vector_size(tokens)) { \
-cr_log_warn("tokens do not have expected length with datas."); \
+cr_log_warn("data do not have expected length with datas."); \
 cr_log_info("%s", format_tokens(tokens)); \
 cr_log_info("%s", format_token_datas(ans,n)); \
 cr_assert(n == vector_size(tokens)); \
@@ -44,7 +46,7 @@ cr_assert(strcmp(tokens[i]->data.data, ans[i]) == 0); \
 if (ans == NULL && vector_size(tokens) == 0) break; \
 int n = sizeof(ans) / sizeof(token_t); \
 if (n != vector_size(tokens)) { \
-cr_log_warn("tokens do not have expected length with types."); \
+cr_log_warn("data do not have expected length with types."); \
 cr_log_info("%s", format_tokens(tokens)); \
 cr_log_info("%s", format_token_types(ans,n)); \
 cr_assert(n == vector_size(tokens)); \

@@ -2,16 +2,8 @@
 // Created by dasin on 2019/11/1.
 //
 
-#ifndef PARSER_SRC_UTIL_STRING_H_
-#define PARSER_SRC_UTIL_STRING_H_
 
-#include <stdlib.h>
-#include <string.h>
-typedef struct {
-  char *data;
-  int len;
-  int cap;
-} string;
+#include "util/string.h"
 
 string* empty_string() {
   string *s = (string*)malloc(sizeof(string));
@@ -63,4 +55,4 @@ void append_into(string *s, const string *t) {
 
 
 
-#endif //PARSER_SRC_UTIL_STRING_H_
+

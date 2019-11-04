@@ -2,11 +2,10 @@
 // Created by dasin on 2019/11/1.
 //
 
-#ifndef PARSER_SRC_UTIL_UTIL_H_
-#define PARSER_SRC_UTIL_UTIL_H_
 
-#include "../error/parse_error.h"
-#include <ctype.h>
+#include "util/util.h"
+
+
 
 char escape_char (char c) {
   if (c == 'a') return '\a';
@@ -53,4 +52,3 @@ char* find_next_match (char *begin, const char *end, const char *word) {
   return NULL;
 }
 
-#endif //PARSER_SRC_UTIL_UTIL_H_

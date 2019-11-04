@@ -2,8 +2,8 @@
 // Created by dasin on 2019/11/1.
 //
 
-#ifndef VECTOR_H_
-#define VECTOR_H_
+#ifndef PARSER_UTIL_VECTOR_H_
+#define PARSER_UTIL_VECTOR_H_
 
 #include <stddef.h> /* for size_t */
 #include <stdlib.h> /* for malloc/realloc/free */
@@ -140,6 +140,14 @@ do { \
  */
 #define vector_end(vec) \
 	((vec) ? &((vec)[vector_size(vec)]) : NULL)
+
+
+/**
+ * @brief vector_last - returns the last element
+ */
+#define vector_last(vec) \
+((vec) ? &((vec)[(vector_size(vec))-1]) : NULL)
+
 
 
 /**
