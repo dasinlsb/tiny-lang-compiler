@@ -52,7 +52,7 @@ const char* token_t2str (token_t i) {
     }
     return my_defined_keywords[i-11];
   }
-  if (i > 50) return (char *)predefined_symbols[i-51];
+  if (i > 50) return predefined_symbols[i-51];
 }
 
 const char *format_token_types (const token_t t[], int n) {

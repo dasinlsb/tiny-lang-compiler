@@ -4,7 +4,7 @@
 #include "syntax/syntax_analyze.h"
 #include "lexer/token.h"
 
-char buffer[1<<10];
+char buffer[1<<12];
 
 void my_test(const char *parser_name, const char *spec) {
   char out_name[20];
@@ -23,6 +23,7 @@ void my_test(const char *parser_name, const char *spec) {
   }
   fread(buffer, 1, sizeof(buffer), in);
   fclose(in);
+  raw_program = buffer;
   fprintf(out,"scanned program:\n");
   fprintf(out, "%s\n", buffer);
   fprintf(out, "---------------\n");
@@ -43,6 +44,7 @@ int main(int argc, char *argv[]) {
   //my_test("block", "block");
   //my_test("expr", "expr");
   //my_test("method_decl", "fun");
-  my_test("prog", "sample");
+  //my_test("prog", "sample");
+  my_test("expr", "1");
   return 0;
 }

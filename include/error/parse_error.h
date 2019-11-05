@@ -10,16 +10,12 @@
 #include <stdlib.h>
 #include "util/file_position.h"
 
+extern char *raw_program;
+
 void parse_error (const char *fmt, ...);
 
 void parse_error_with_pos (filepos *pos, const char *fmt, ...);
 
-extern char buf[100];
-
-void global_set_parse_error_with_pos (filepos *pos, const char *fmt, ...);
-
-void global_set_parse_error (const char *fmt, ...);
-
-void global_pop_parse_error ();
+void global_parse_error_with_pos (filepos *pos, const char *fmt, ...);
 
 #endif //PARSER_SRC_ERROR_PARSE_ERROR_H_

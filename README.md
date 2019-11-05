@@ -70,6 +70,20 @@ int sa_run_parser (sa_input_t *in, sa_env_t *env, sa_parser_t *parser, sa_result
 + 参数`in`表示输入的token序列,
 + 参数`env`表示构建AST时需要的环境, 这里仅维护从`parser name`到`parser`的映射
 
+## 错误处理
+
++ 将文件`r-1`中的数据扔到`assign-statement parser`里 失败会在控制台输出错误信息
+
+![](./doc/assign_stmt_error.png)
+
++ `block parser`的解析结果
+
+  ![](./doc/block_error.png)
+
++ 但是对于或逻辑可能遇到多种可能的错误, 这里不进行猜测
+
+  ![](./doc/unable.png)
+
 ## 测试
 
 对于样例数据, 编译运行`src/main.c`得到输出

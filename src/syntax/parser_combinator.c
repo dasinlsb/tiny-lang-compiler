@@ -5,6 +5,11 @@
 
 #include "syntax/parser_combinator.h"
 
+void push_up_result (sa_result_t *r, sa_result_t *child) {
+  r->pos = child->pos;
+  r->err_msg = child->err_msg;
+}
+
 sa_env_t* sa_env_empty () {
   sa_env_t *e = malloc(sizeof(sa_env_t));
   e->keys = NULL;
@@ -41,6 +46,7 @@ int sa_run_parser (sa_input_t *in, sa_env_t *env, sa_parser_t *p, sa_result_t **
   *r = (sa_result_t*)malloc(sizeof(sa_result_t));
   (*r)->ast = empty_syntax_tree();
   (*r)->ast->type = p->info;
+  (*r)->err_msg = NULL;
   switch (p->type) {
     case SA_TYPE_AND: {
       sa_input_push_mark(in);
@@ -49,6 +55,7 @@ int sa_run_parser (sa_input_t *in, sa_env_t *env, sa_parser_t *p, sa_result_t **
           append_ast_child((*r)->ast, result->ast);
         } else {
           (*r)->ast = NULL;
+          push_up_result(*r, result);
           sa_input_pop_mark(in);
           return 0;
         }
@@ -64,6 +71,7 @@ int sa_run_parser (sa_input_t *in, sa_env_t *env, sa_parser_t *p, sa_result_t **
         return 1;
       } else {
         (*r)->ast = NULL;
+        push_up_result(*r, result);
         return 0;
       }
     }
@@ -73,6 +81,7 @@ int sa_run_parser (sa_input_t *in, sa_env_t *env, sa_parser_t *p, sa_result_t **
         return 1;
       } else {
         (*r)->ast = NULL;
+        push_up_result(*r, result);
         return 0;
       }
     }
@@ -105,6 +114,7 @@ int sa_run_parser (sa_input_t *in, sa_env_t *env, sa_parser_t *p, sa_result_t **
           append_ast_child((*r)->ast, result->ast);
           j++;
         } else {
+          push_up_result(*r, result);
           break;
         }
       }
@@ -112,11 +122,21 @@ int sa_run_parser (sa_input_t *in, sa_env_t *env, sa_parser_t *p, sa_result_t **
       return j > 0;
     }
     case SA_TYPE_OR: {
+      int err_cnt = 0;
       for (j = 0; j < p->data.or.n; j++) {
         if (sa_run_parser(in, env, p->data.or.ps[j], &result)) {
           (*r)->ast = result->ast;
           return 1;
+        } else {
+          err_cnt ++;
+          if ((*r)->err_msg == NULL) {
+            push_up_result(*r, result);
+          }
         }
+      }
+      if (err_cnt > 1) {
+        (*r)->err_msg = empty_string();
+        append_const_str((*r)->err_msg, "not sure what you want to type >_<");
       }
       (*r)->ast = NULL;
       return 0;
@@ -128,6 +148,16 @@ int sa_run_parser (sa_input_t *in, sa_env_t *env, sa_parser_t *p, sa_result_t **
         append_ast_token((*r)->ast, token);
         return 1;
       } else {
+        (*r)->pos = token == NULL ? NULL : &token->pos;
+        (*r)->err_msg = empty_string();
+        append_const_str((*r)->err_msg, "expect ");
+        append_const_str((*r)->err_msg, token_t2str(p->data.token.t));
+        append_const_str((*r)->err_msg, " but found ");
+        if (token == NULL) {
+          append_const_str((*r)->err_msg, "nothing");
+        } else {
+          append_const_str((*r)->err_msg, token_t2str(token->type));
+        }
         return 0;
       }
     }

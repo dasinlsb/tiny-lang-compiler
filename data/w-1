@@ -1,0 +1,6 @@
+scanned program:
+INT INT;
+---------------
+tokens:
+data:[INT], [INT], [;], 
+---------------

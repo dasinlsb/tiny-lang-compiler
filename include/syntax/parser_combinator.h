@@ -54,8 +54,11 @@ struct sa_parser_t {
 
 typedef struct {
   AST *ast;
-  char *err_msg;
+  filepos *pos;
+  string *err_msg;
 } sa_result_t;
+
+void push_up_result (sa_result_t *r, sa_result_t *child);
 
 typedef struct {
   char **keys;

@@ -256,14 +256,17 @@ AST* syntax_analyze (const char *p_name, token_data **tokens) {
   make_parsers();
   sa_input_t *i = sa_input_create(tokens);
   sa_parser_t *p = find_parser_by_name(sa_global_env, p_name);
+  if (p == NULL) {
+    parse_error("no such parser found");
+  }
   sa_result_t *r;
   if (sa_run_parser(i, sa_global_env, p, &r)) {
     if (sa_peek_input(i) == NULL) {
       return r->ast;
     } else {
-      parse_error("not consumed all input");
+      global_parse_error_with_pos(&sa_peek_input(i)->pos, "not consumed all input");
     }
   } else {
-    parse_error("parse AST error");
+    global_parse_error_with_pos(r->pos, r->err_msg->data);
   }
 }
