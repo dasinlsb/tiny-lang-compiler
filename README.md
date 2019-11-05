@@ -2,6 +2,28 @@
 
 raw program -> token list -> AST
 
+## 构建和运行
+
+### 环境
+
++ Ubuntu 18.04.3
+
++ cmake 3.10.2
+
++ g++ 7.4
+
+在项目根目录下运行
+
+```bash
+mkdir build && cd build
+cmake ..
+make
+```
+
+然后运行`./src/tiny [NAME] [SUF]`即可将`data/r-#SUF`文件内容作为输入, 并输出结果到`data/w-#SUF`中
+
+例如`./src/tiny prog sample`读入`data/r-sample`并将结果输出到`data/w-sample`中
+
 ## Lexer
 
 `token` 用记录 `content`, `type` 和 `file-position`的结构体表示
