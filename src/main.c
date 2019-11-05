@@ -41,10 +41,13 @@ void my_test(const char *parser_name, const char *spec) {
 }
 
 int main(int argc, char *argv[]) {
-  //my_test("block", "block");
-  //my_test("expr", "expr");
-  //my_test("method_decl", "fun");
-  //my_test("prog", "sample");
-  my_test("expr", "1");
+  if (argc < 3) {
+    fprintf(stderr, "usage: ./main parser-name file-suffix");
+    fprintf(stderr, "e.g. ./main prog sample will parse ./data/r-sample and output result to ./data/w-sample");
+    exit(1);
+  }
+  const char *parser_name = argv[1];
+  const char *file_name = argv[2];
+  my_test(parser_name, file_name);
   return 0;
 }
